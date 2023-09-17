@@ -1,10 +1,10 @@
 import requests
 
 
-courses = ["Python-разработчик с нуля", "Java-разработчик с нуля", "Fullstack-разработчик на Python",
+courses: list = ["Python-разработчик с нуля", "Java-разработчик с нуля", "Fullstack-разработчик на Python",
            "Frontend-разработчик с нуля"]
 
-mentors = [
+mentors: list = [
     ["Евгений Шмаргунов", "Олег Булыгин", "Дмитрий Демидов", "Кирилл Табельский", "Александр Ульянцев",
      "Александр Бардин", "Александр Иванов", "Антон Солонилин", "Максим Филипенко", "Елена Никитина", "Азамат Искаков",
      "Роман Гордиенко"],
@@ -20,7 +20,7 @@ mentors = [
 ]
 
 
-def popular_name(courses, mentors):
+def popular_name(courses: list, mentors: list) -> list:
     all_list = []
     [all_list.extend(m) for m in mentors]
     all_names_list = [mentor.split()[0].strip() for mentor in all_list]
@@ -31,11 +31,10 @@ def popular_name(courses, mentors):
     popular.sort(key=lambda x: x[1], reverse=True)
     top_3 = popular[:3]
     res = [f'{names}: {count} раз(а)' for names, count in top_3]
-    # print(', '.join(res))
     return res
 
 
-def cook_book(person):
+def cook_book(person: int) -> str:
     cook_book = [
         ['салат',
          [
@@ -72,21 +71,21 @@ def cook_book(person):
     return res
 
 
-def pair_girls_boys(girls, boys):
+def pair_girls_boys(girls: list, boys: list) -> str:
     if len(boys) == len(girls):
         boys.sort()
         girls.sort()
-        pair = list(zip(boys, girls))
-        res = '\n'.join(map(' and '.join, pair))
+        pair: list = list(zip(boys, girls))
+        res: str = '\n'.join(map(' and '.join, pair))
     else:
         res = 'Неверное количество человек'
     return res
 
 
-def make_folder_yandex(name):
+def make_folder_yandex(name: str) -> int:
     with open('token.txt', 'r') as file_object:
-        token = file_object.readline()
-    headers = {'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': f'OAuth {token}'}
+        token: str = file_object.readline()
+    headers: str = {'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': f'OAuth {token}'}
     url = f'https://cloud-api.yandex.net/v1/disk/resources?path={name}'
     response = requests.put(url, headers=headers)
     return response.status_code

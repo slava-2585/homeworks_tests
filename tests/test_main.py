@@ -4,11 +4,11 @@ from main import popular_name, cook_book, pair_girls_boys, make_folder_yandex
 
 
 class TestPopularName(TestCase):
-    def setUp(self):
-        self.courses = ["Python-разработчик с нуля", "Java-разработчик с нуля", "Fullstack-разработчик на Python",
+    def setUp(self) -> None:
+        self.courses: list = ["Python-разработчик с нуля", "Java-разработчик с нуля", "Fullstack-разработчик на Python",
                         "Frontend-разработчик с нуля"]
 
-        self.mentors = [
+        self.mentors: list = [
             ["Евгений Шмаргунов", "Олег Булыгин", "Дмитрий Демидов", "Кирилл Табельский", "Александр Ульянцев",
              "Александр Бардин", "Александр Иванов", "Антон Солонилин", "Максим Филипенко", "Елена Никитина",
              "Азамат Искаков",
@@ -47,31 +47,31 @@ class TestPopularName(TestCase):
         self.assertIn(expected, res)
 
     def test_pair_girls_boys(self):
-        girls = ['Нина', 'Вика', 'Ольга']
-        boys = ['Михаил', 'Александр', 'Владимир']
+        girls: list = ['Нина', 'Вика', 'Ольга']
+        boys: list = ['Михаил', 'Александр', 'Владимир']
         res = pair_girls_boys(boys, girls)
         expected = 'Вика and Александр\nНина and Владимир\nОльга and Михаил'
         self.assertEqual(res, expected)
 
     def test_status_code(self):
         res = make_folder_yandex('new2')
-        expected = 201
+        expected: int = 201
         self.assertEqual(res, expected)
 
     def test_make_folder_error(self):
         res = make_folder_yandex('vk')
-        expected = 409
+        expected: int = 409
         self.assertEqual(res, expected)
 
     def test_make_folder_disk(self):
         make_folder_yandex('new')
         with open('token.txt', 'r') as file_object:
-            token = file_object.readline()
-        headers = {'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': f'OAuth {token}'}
-        url = f'https://cloud-api.yandex.net/v1/disk/resources?path=new'
+            token: str = file_object.readline()
+        headers: str = {'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': f'OAuth {token}'}
+        url: str = f'https://cloud-api.yandex.net/v1/disk/resources?path=new'
         response = requests.get(url, headers=headers)
-        res = response.status_code
-        expected = 200
+        res: int = response.status_code
+        expected: int = 200
         self.assertEqual(res, expected)
 
 
